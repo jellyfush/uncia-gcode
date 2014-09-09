@@ -39,7 +39,7 @@ SOFTWARE.
 
 String sBuffer;
 
-int stepsPerUnit = 100;
+int stepsPerUnit = 80;
 int feedRate = 100;
 int stepDelay = 0;
 
@@ -57,7 +57,7 @@ void setup(){
   digitalWrite(STEPPER_SLEEP, 1); 
 
   
-  setAxisSteps(100); // default steps per mm
+  setAxisSteps(80); // default steps per mm
   setFeedRate(100); // default feed rate
   
   Serial.begin(BAUD);  // open coms
@@ -145,6 +145,11 @@ boolean pushCurrentCommand(){
           Serial.print(F(" Disable")); 
           digitalWrite(STEPPER_DISABLE, 1);
           return true;
+        case 91:
+          attr = getCommandAttr(results, resultSize, 'Z');
+          if(attr != "")
+            return setAxisSteps(attr.toInt());
+          return true;
         case 100:
           printCommands();
           return true;
@@ -203,6 +208,7 @@ int getCommandArray(String *subCommands){
 
 boolean setAxisSteps(int steps){
   stepsPerUnit = steps;
+  setFeedRate(feedRate);
 }
 
 // unit(mm)/m
