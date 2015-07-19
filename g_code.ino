@@ -39,7 +39,7 @@ SOFTWARE.
 
 String sBuffer;
 
-int stepsPerUnit = 80;
+int stepsPerUnit = 87;
 int feedRate = 100;
 int stepDelay = 0;
 
